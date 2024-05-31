@@ -30,7 +30,10 @@ sudo yum install mariadb-server -y
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 cd /tmp/
-git clone -b local-setup https://github.com/devopshydclub/vprofile-project.git
+# This link was unable to clone https://github.com/devopshydclub/vprofile-project.git so i use the https://github.com/Adutoby/vprofile-project.git
+git clone -b local-setup https://github.com/Adutoby/vprofile-project.git
+
+
 #restore the dump file for the application
 sudo mysqladmin -u root password "$DATABASE_PASS"
 sudo mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET Password=PASSWORD('$DATABASE_PASS') WHERE User='root'"
@@ -96,6 +99,7 @@ sudo systemctl restart rabbitmq-server
 ### Bash Script for Application
 
 - We will create a Bash script to provision Tomcat server for our application.
+#### The error i face when creating this was on line 152 to 155 i was unable to clone the repo that was on the tomcat bash script . the one i clone was not clean so i use "mvn clean" 
 ```sh
 TOMURL="https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz"
 yum install java-1.8.0-openjdk -y
@@ -145,8 +149,10 @@ systemctl daemon-reload
 systemctl start tomcat
 systemctl enable tomcat
 
-git clone -b local-setup https://github.com/devopshydclub/vprofile-project.git
+sudo su -
+git clone -b local-setup https://github.com/Adutoby/vprofile-project.git
 cd vprofile-project
+mvn clean
 mvn install
 systemctl stop tomcat
 sleep 60
@@ -200,7 +206,7 @@ systemctl restart nginx
 
 - First clone the repository
 ```sh
-git clone https://github.com/rumeysakdogan/vprofile-project.git
+git clone https://github.com/Adutoby/vprofile-project.git
 ```
 
 - We need to go to directory that our Vagrantfile exists. Before we run our VBoxes using `vagrant`, we need to install below plugin.
